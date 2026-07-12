@@ -104,7 +104,7 @@ zip -r got10k_submit.zip got10k_submit/
 
 执行后将快速返回（无输出），转换结果就在原目录下。
 
-
+## 模型权重
 
 `mae_pretrain_vit_base.pth`文件放在`pretrained_models`目录下
 
