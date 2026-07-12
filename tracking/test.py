@@ -2,15 +2,26 @@ import os
 import sys
 import argparse
 
+# 将项目根目录（ARTrack/）加入 sys.path，确保后续能正确导入 lib 包下的模块。
 prj_path = os.path.join(os.path.dirname(__file__), '..')
 if prj_path not in sys.path:
     sys.path.append(prj_path)
 
+# get_dataset：根据名称加载对应的测试数据集（如 OTB、GOT-10k、LaSOT 等）
+# run_dataset：在数据集上运行跟踪器（支持多线程、多GPU并行）
+# Tracker：封装跟踪器模型、配置和参数
 from lib.test.evaluation import get_dataset
 from lib.test.evaluation.running import run_dataset
 from lib.test.evaluation.tracker import Tracker
 
-
+#@Param: tracker_name: 跟踪器名称
+#@Param: tracker_param: 跟踪器参数文件名称
+#@Param: run_id: 运行ID（可选）
+#@Param: dataset_name: 数据集名称（默认 'otb'）
+#@Param: sequence: 指定序列名称或编号（可选）
+#@Param: debug: 调试级别（默认 0）
+#@Param: threads: 使用的线程数（默认 0，表示自动选择）
+#@Param: num_gpus: 使用的GPU数量（默认 8）
 def run_tracker(tracker_name, tracker_param, run_id=None, dataset_name='otb', sequence=None, debug=0, threads=0,
                 num_gpus=8):
     """Run tracker on sequence or dataset.
@@ -33,7 +44,14 @@ def run_tracker(tracker_name, tracker_param, run_id=None, dataset_name='otb', se
 
     run_dataset(dataset, trackers, debug, threads, num_gpus=num_gpus)
 
-
+#@Param: tracker_name: 跟踪器名称
+#@Param: tracker_param: 跟踪器参数文件名称
+#@Param: runid: 运行ID（可选）
+#@Param: dataset_name: 数据集名称（默认 'otb'）
+#@Param: sequence: 指定序列名称或编号（可选）
+#@Param: debug: 调试级别（默认 0）
+#@Param: threads: 使用的线程数（默认 0，表示自动选择）
+#@Param: num_gpus: 使用的GPU数量（默认 8）
 def main():
     parser = argparse.ArgumentParser(description='Run tracker on sequence or dataset.')
     parser.add_argument('tracker_name', type=str, help='Name of tracking method.')

@@ -1,220 +1,103 @@
 # ARTrack
 
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/artrackv2-prompting-autoregressive-tracker/visual-object-tracking-on-got-10k)](https://paperswithcode.com/sota/visual-object-tracking-on-got-10k?p=artrackv2-prompting-autoregressive-tracker)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/artrackv2-prompting-autoregressive-tracker/visual-object-tracking-on-lasot)](https://paperswithcode.com/sota/visual-object-tracking-on-lasot?p=artrackv2-prompting-autoregressive-tracker)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/artrackv2-prompting-autoregressive-tracker/visual-object-tracking-on-trackingnet)](https://paperswithcode.com/sota/visual-object-tracking-on-trackingnet?p=artrackv2-prompting-autoregressive-tracker)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/artrackv2-prompting-autoregressive-tracker/visual-object-tracking-on-needforspeed)](https://paperswithcode.com/sota/visual-object-tracking-on-needforspeed?p=artrackv2-prompting-autoregressive-tracker)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/artrackv2-prompting-autoregressive-tracker/visual-object-tracking-on-tnl2k)](https://paperswithcode.com/sota/visual-object-tracking-on-tnl2k?p=artrackv2-prompting-autoregressive-tracker)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/artrackv2-prompting-autoregressive-tracker/visual-object-tracking-on-lasot-ext)](https://paperswithcode.com/sota/visual-object-tracking-on-lasot-ext?p=artrackv2-prompting-autoregressive-tracker)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/artrackv2-prompting-autoregressive-tracker/visual-object-tracking-on-uav123)](https://paperswithcode.com/sota/visual-object-tracking-on-uav123?p=artrackv2-prompting-autoregressive-tracker)
+### ⚠️如果同名文件存在两个，file_origin是原始代码文件，file是可能修改文件
 
-The official PyTorch implementation of our **CVPR 2023 Highlight**  and  **CVPR 2024 Poster**  paper:
 
-**Autoregressive Visual Tracking**
 
-**ARTrackV2: Prompting Autoregressive Tracker Where to Look and How to Describe**
+## zip报错（没有修改脚本，自己通过命令行压缩）
 
-GitHub maintainer: [Yifan Bai](https://github.com/AlexDotHam)
+![image-20260712085855709](assets/zip_error.png)
 
-[[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wei_Autoregressive_Visual_Tracking_CVPR_2023_paper.pdf)] 
-[[CVPR2024](https://artrackv2.github.io/)] 
+这个错误非常关键！它不仅解释了为什么脚本“没反应”，还指出了问题的根源——**脚本在最后尝试将整个结果目录压缩成 ZIP 文件，但由于文件总大小超过了 4GB 的 ZIP 格式传统限制，导致压缩过程卡住或失败**，而用户误以为卡死。
 
-### :bookmark: Update List:
-- [ ] Fastitnp
-- [ ] VastTrack and More Datasets
+------
 
-### :bookmark: Checkpoints in Baidu Pan
-[[Baidu Pan](https://pan.baidu.com/s/1bpdLdwO39kHD5iH06aGIzg?pwd=g06j)]  passwd: g06j 
+## 为什么会这样？
 
-Google Drive:
-[ARTrackV2-B-256](https://drive.google.com/file/d/1tGaY5jQxZOTzJDWXgOgoHtBwc5l4NLQ2/view?usp=drive_link)       |     [ARTrackV2-B-256-GOT](https://drive.google.com/file/d/1RqsjHqTBsIN5ivD-C5tXDyhZlGZjJN88/view?usp=drive_link)     |     [ARTrackV2-L-384-GOT](https://drive.google.com/file/d/1KJ-TXFSn6K_OhchoRE29ePZbSm9sBHVS/view?usp=drive_link)     |
+从错误堆栈的最后部分可以看到：
 
-### :bookmark:Our ARTrackV2 is accepted by CVPR2024!!!
-[[Deprecated Code](https://drive.google.com/file/d/15PHRN9utPfm1L4djr7U6MLHWIkx90EVD/view?usp=sharing)]
-[[Raw Result](https://drive.google.com/drive/folders/1Kd6IA60OQStfYCgsi42I20VRDTB7VcWl?usp=sharing)]
-
-We have released the training code for ARTrackV2 and merged it into this repository. You can adjust the config to use the corresponding ARTrackV2-marked modules. The training process remains the same as V1.
-
-|             Variant             |       [ARTrackV2-B-256](https://drive.google.com/file/d/1tGaY5jQxZOTzJDWXgOgoHtBwc5l4NLQ2/view?usp=drive_link)       |     [ARTrackV2-B-256-GOT](https://drive.google.com/file/d/1RqsjHqTBsIN5ivD-C5tXDyhZlGZjJN88/view?usp=drive_link)     |     [ARTrackV2-L-384-GOT](https://drive.google.com/file/d/1KJ-TXFSn6K_OhchoRE29ePZbSm9sBHVS/view?usp=drive_link)     |
-|:-------------------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
-|          Model Config           | ViT-B, 256^2 resolution | ViT-B, 256^2 resolution | ViT-L, 384^2 resolution |
-| GOT-10k (AO / SR 0.5 / SR 0.75) |   - / - / -    |   76.1 / 85.5 / 72.9    |   79.6 / 88.0 / 78.7    |
-|    LaSOT (AUC / Norm P / P)     |   71.5 / 80.3 / 77.5    |        - / - / -        |        - / - / -        |
-| TrackingNet (AUC / Norm P / P)  |   84.3 / 89.1 / 83.6    |        - / - / -        |        - / - / -        |
-|  LaSOT_ext (AUC / Norm P / P)   |   51.1 / 58.4 / 61.5    |        - / - / -        |        - / - / -        |
-
-## Highlight
-
-![](figure/overview.jpg)
-
-### :bookmark:Brief Introduction
-
-We present **ARTrack**, an autoregressive framework for visual object tracking. ARTrack tackles tracking as a coordinate sequence interpretation task that estimates object trajectories progressively, where the current estimate is induced by previous states and in turn affects subsequences. This time-autoregressive approach models the sequential evolution of trajectories to keep tracing the object **across frames**, making it superior to existing template matching based trackers that only consider the **per-frame** localization accuracy. ARTrack is simple and direct, eliminating customized localization heads and post-processings. Despite its simplicity, ARTrack achieves state-of-the-art performance on prevailing benchmark datasets.
-### :bookmark:Strong Performance
-
-|             Variant             |       ARTrack-256       |       ARTrack-384       |      ARTrack-L-384      |
-|:-------------------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
-|          Model Config           | ViT-B, 256^2 resolution | ViT-B, 384^2 resolution | ViT-L, 384^2 resolution |
-| GOT-10k (AO / SR 0.5 / SR 0.75) |   73.5 / 82.2 / 70.9    |   75.5 / 84.3 / 74.3    |   78.5 / 87.4 / 77.8    |
-|    LaSOT (AUC / Norm P / P)     |   70.4 / 79.5 / 76.6    |   72.6 / 81.7 / 79.1    |   73.1 / 82.2 / 80.3    |
-| TrackingNet (AUC / Norm P / P)  |   84.2 / 88.7 / 83.5    |   85.1 / 89.1 / 84.8    |   85.6 / 89.6 / 84.8    |
-|  LaSOT_ext (AUC / Norm P / P)   |   46.4 / 56.5 / 52.3    |   51.9 / 62.0 / 58.5    |   52.8 / 62.9 / 59.7    |
-|          TNL-2K (AUC)           |          57.5           |          59.8           |          60.3           |
-|           NfS30 (AUC)           |          64.3           |          66.8           |          67.9           |
-|          UAV123 (AUC)           |          67.7           |          70.5           |          71.2           |
-
-### :bookmark:Inference Speed
-
-Our baseline model (backbone: ViT-B, resolution: 256x256) can run at **26 fps** (frames per second) on a single NVIDIA GeForce RTX 3090, our alter decoder version can run at **45 fps** on a single NVIDIA GeForce RTX 3090.
-
-## Bug of array of inhomogeneous shape
-
-Thanks to [MrtXue](https://github.com/MrtXue), if you meet the "ValueError: setting an array element with a sequence." when you train in the second stage, you can try to reduce your numpy version to 1.23.
-
-## Update for checkpoint(ARTrack_large_384_full):
-
-You can download the model weights from [Google Drive](https://drive.google.com/drive/folders/1KsH_MIZIdgjZpUZBmR4P88yeYDqM8yNW?usp=sharing)
-
-|             Variant             |      ARTrack-L-384      |
-|:-------------------------------:|:-----------------------:|
-|          Model Config           | ViT-L, 384^2 resolution |
-| GOT-10k (AO / SR 0.5 / SR 0.75) |   80.0 / 88.5 / 80.0    |
-|    LaSOT (AUC / Norm P / P)     |   73.5 / 82.4 / 80.6    |
-| TrackingNet (AUC / Norm P / P)  |   85.5 / 90.1 / 85.9    |
-|  LaSOT_ext (AUC / Norm P / P)   |   51.8 / 62.3 / 58.8    |
-
-## Update for checkpoint and raw_result(ARTrack_base_256_full):
-
-You can download the model weights and raw_result from [Google Drive](https://drive.google.com/drive/folders/1KsH_MIZIdgjZpUZBmR4P88yeYDqM8yNW?usp=sharing)
-
-|             Variant             |       ARTrack-256       |     ARTrack-256-got     |
-|:-------------------------------:|:-----------------------:|:-----------------------:|
-|          Model Config           | ViT-B, 256^2 resolution | ViT-B, 256^2 resolution |
-| GOT-10k (AO / SR 0.5 / SR 0.75) |   76.7 / 85.7 / 74.8    |   74.1 / 83.1 / 70.0    |
-|    LaSOT (AUC / Norm P / P)     |   70.8 / 79.6 / 76.3    |        - / - / -        |
-| TrackingNet (AUC / Norm P / P)  |   84.3 / 88.7 / 83.4    |        - / - / -        |
-|  LaSOT_ext (AUC / Norm P / P)   |   48.4 / 57.7 / 53.7    |        - / - / -        |
-
-## Install the environment
-
-Use the Anaconda (CUDA 11.3)
-```
-conda env create -f ARTrack_env_cuda113.yaml
+```python
+shutil.make_archive(src_dir, "zip", src_dir)
 ```
 
-## Set project paths
-Run the following command to set paths for this project
-```
-python tracking/create_default_local_file.py --workspace_dir . --data_dir ./data --save_dir ./output
-```
-After running this command, you can also modify paths by editing these two files
-```
-lib/train/admin/local.py  # paths about training
-lib/test/evaluation/local.py  # paths about testing
-```
+这行代码位于脚本的末尾（第39行附近），意思是：
 
-## Data Preparation
-Put the tracking datasets in ./data. It should look like this:
-   ```
-   ${PROJECT_ROOT}
-    -- data
-        -- lasot
-            |-- airplane
-            |-- basketball
-            |-- bear
-            ...
-        -- got10k
-            |-- test
-            |-- train
-            |-- val
-        -- coco
-            |-- annotations
-            |-- images
-        -- trackingnet
-            |-- TRAIN_0
-            |-- TRAIN_1
-            ...
-            |-- TRAIN_11
-            |-- TEST
-   ```
+> 把转换完的所有结果文件（位于 `src_dir`）打包成一个 ZIP 压缩包，放在同一级目录。
 
-## Training
-Download pre-trained [MAE ViT-Base weights](https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_base.pth) and put it under `$PROJECT_ROOT$/pretrained_models` (different pretrained models can also be used, see [MAE](https://github.com/facebookresearch/mae) for more details).
+- 你的测试结果文件可能很多（GOT-10k 有 180 个序列，每个文件可能包含数百帧的坐标），加起来总大小较大。
+- 当压缩包超过 **4GB** 时，标准 ZIP 格式无法容纳（除非启用 ZIP64 扩展），而 Python 的 `shutil.make_archive` 默认**不一定自动启用 ZIP64**（在某些版本或环境下可能未正确处理），于是抛出了 `RuntimeError`。
+- 压缩过程本身也消耗时间和 I/O 资源，且在压缩完成前脚本没有任何输出，所以你看到“没反应”。
 
-### One-stage pair-level training
+------
 
-Since sequence-level training requires video input, and the COCO dataset contains only images, traditional training methods were first used to train the model so that it could be fairly compared to other trackers.
-```
-python tracking/train.py --script artrack --config artrack_256_full --save_dir ./output --mode multiple --nproc_per_node 4 --use_wandb 0
+## 解决办法（按推荐顺序）
+
+### 方法一：禁止压缩（最快、最直接）
+
+既然你已经有了转换后的文件，通常并不需要 ZIP 包（除非你要提交给官方评估服务器）。可以**直接注释掉压缩那一行**，让脚本只做格式转换，不做压缩。
+
+编辑 `/home/hugo/projects/cv/ARTrack/lib/test/utils/transform_got10k.py`，找到类似下面这行（可能在函数末尾）：
+
+```python
+shutil.make_archive(src_dir, "zip", src_dir)
 ```
 
-Replace `--config` with the desired model config under `experiments/artrack`. We use [wandb](https://github.com/wandb/client) to record detailed training logs, in case you don't want to use wandb, set `--use_wandb 0`.
+在它前面加上 `#` 注释掉，或者直接删除。保存后重新运行命令，这次会在几秒内完成。
 
-### Two-stage sequence-level training
+**修改后的脚本示例**（只保留转换逻辑）：
 
-To enable sequence-level training, replace 'experience/artrack_seq/*.yaml' PRETRAIN_PTH in the yaml configuration file with the path to your pretrained checkpoint, such as './output/artrack_256_full/checkpoints/train/artrack/artrack_256_full/ARTrack_ep0240.pth.tar'.
-
-```
-python tracking/train.py --script artrack_seq --config artrack_seq_256_full --save_dir ./output --mode multiple --nproc_per_node 4 --use_wandb 0
-```
-
-## Evaluation
-
-Change the corresponding values of `lib/test/evaluation/local.py` to the actual benchmark saving paths
-
-Some testing examples:
-- LaSOT or other off-line evaluated benchmarks (modify `--dataset` correspondingly)
-```
-python tracking/test.py artrack_seq artrack_seq_256_full --dataset lasot --threads 16 --num_gpus 4
-python tracking/analysis_results.py # need to modify tracker configs and names
-```
-- GOT10K-test
-```
-python tracking/test.py artrack_seq artrack_seq_256_full --dataset got10k_test --threads 16 --num_gpus 4
-python lib/test/utils/transform_got10k.py --tracker_name ostrack --cfg_name vitb_384_mae_ce_32x4_got10k_ep100
-```
-- TrackingNet
-```
-python tracking/test.py artrack_seq artrack_seq_256_full --dataset trackingnet --threads 16 --num_gpus 4
-python lib/test/utils/transform_trackingnet.py --tracker_name ostrack --cfg_name vitb_384_mae_ce_32x4_ep300
+```python
+# 转换部分... (前面的代码不变)
+# 最后去掉压缩
+# shutil.make_archive(src_dir, "zip", src_dir)
 ```
 
-## Acknowledgement
+------
 
-:heart::heart::heart:Our idea is implemented base on the following projects. We really appreciate their excellent open-source works!
+### 方法二：启用 ZIP64 支持
 
-- [SIoU](https://github.com/AlexDotHam/SIoU-loss) [[related paper](https://arxiv.org/abs/2205.12740)]
-- [OSTrack](https://github.com/botaoye/OSTrack) [[related paper](https://arxiv.org/abs/2203.11991)]
-- [PyTracking](https://github.com/visionml/pytracking) [[related paper](https://arxiv.org/abs/2208.06888)]
+如果你确实需要 ZIP 包，可以修改脚本，显式使用 `zipfile.ZipFile` 并启用 `allowZip64=True`。但这种方法相对复杂，且可能仍然因为文件数量过多（超过 65535 个文件）而失败。不推荐。
 
-:heart::heart::heart:This project is not for commercial use. For commercial use, please contact the author.
+------
 
-:heart::heart::heart:This project is not for commercial use. For commercial use, please contact the author.
+### 方法三：使用系统压缩工具（替代）
 
-:heart::heart::heart:This project is not for commercial use. For commercial use, please contact the author.
+如果不想改脚本，也可以手动压缩。转换完成后（脚本不压缩），在终端执行：
 
-## Citation
-
-If any parts of our paper and code help your research, please consider citing us and giving a star to our repository.
-
-```
-@InProceedings{Wei_2023_CVPR,
-    author    = {Wei, Xing and Bai, Yifan and Zheng, Yongchao and Shi, Dahu and Gong, Yihong},
-    title     = {Autoregressive Visual Tracking},
-    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-    month     = {June},
-    year      = {2023},
-    pages     = {9697-9706}
-}
-@InProceedings{Bai_2024_CVPR,
-    author    = {Bai, Yifan and Zhao, Zeyang and Gong, Yihong and Wei, Xing},
-    title     = {ARTrackV2: Prompting Autoregressive Tracker Where to Look and How to Describe},
-    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-    month     = {June},
-    year      = {2024}
-}
+```bash
+cd /home/hugo/projects/cv/ARTrack/output/test/tracking_results/artrack/artrack_256_got/
+zip -r got10k_submit.zip got10k_submit/
 ```
 
-## Contact
+`zip` 命令默认支持 ZIP64，不会出错。
 
-If you have any questions or concerns, feel free to open issues or directly contact me through the ways on my GitHub homepage **provide below paper's title**.
+------
+
+### 方法四：检查是否有不必要的文件被纳入压缩
+
+有时 `src_dir` 可能包含了之前的旧结果或临时文件，导致文件夹过大。你可以先清理一下该目录，只保留必要的 `.txt` 结果文件。
+
+------
+
+## 补充说明：脚本到底在做什么？
+
+完整流程如下：
+
+1. 读取 `src_dir` 下的所有 `.txt` 文件（每个视频一个）。
+2. 按 GOT-10k 官方评估格式转换（例如将坐标从 `[x,y,w,h]` 转为 `[x1,y1,x2,y2]` 等）。
+3. **覆盖或写入新文件**（注意：可能直接修改原文件，也可能另存）。
+4. **最后，将整个目录压缩成 ZIP 包**。
+
+所以，现在你只需修改脚本去掉压缩步骤，就能很快完成转换，然后就可以使用 GOT-10k 官方工具进行性能评估了。
+
+------
+
+## 最终命令（修改脚本后）
+
+```bash
+/home/hugo/miniconda3/envs/ostrack_fresh/bin/python /home/hugo/projects/cv/ARTrack/lib/test/utils/transform_got10k.py --tracker_name artrack --cfg_name artrack_256_got
+```
+
+执行后将快速返回（无输出），转换结果就在原目录下。
+
+如果你不清楚如何修改文件，告诉我，我可以指导你具体的修改细节。

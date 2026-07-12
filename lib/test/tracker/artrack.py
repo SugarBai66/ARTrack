@@ -63,7 +63,7 @@ class ARTrack(BaseTracker):
         super(ARTrack, self).__init__(params)
         network = build_artrack(params.cfg, training=False)
         print(self.params.checkpoint)
-        network.load_state_dict(torch.load(self.params.checkpoint, map_location='cpu')['net'], strict=True)
+        network.load_state_dict(torch.load(self.params.checkpoint, map_location='cpu',weights_only=False)['net'], strict=True)
         self.cfg = params.cfg
         self.bins = self.cfg.MODEL.BINS
         self.network = network.cuda()

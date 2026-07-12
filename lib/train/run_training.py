@@ -25,7 +25,24 @@ def init_seeds(seed):
     cv.setNumThreads(1)
     cv.ocl.setUseOpenCL(False)
 
+#@run_training is the main function to run the training script. It takes in the script name, config name, and other optional parameters
+# such as cudnn_benchmark, local_rank, save_dir, base_seed, use_lmdb, script_name_prv, config_name_prv, use_wandb, distill, script_teacher, and config_teacher.
+# It sets up the environment for training and calls the appropriate training function based on whether knowledge distillation is being used or not.
 
+#@Params:
+#@script_name: Name of experiment in the "experiments/" folder.
+#@config_name: Name of the yaml file in the "experiments/<script_name>".
+#@cudnn_benchmark: Use cudnn benchmark or not (default is True).
+#@local_rank: Rank of the current process in distributed training.
+#@save_dir: Directory to save the training results.
+#@base_seed: Base seed for random number generation.
+#@use_lmdb: Whether to use LMDB for data storage.
+#@script_name_prv: Name of the previous experiment in the "experiments/" folder.
+#@config_name_prv: Name of the previous yaml file in the "experiments/<script_name_prv>".
+#@use_wandb: Whether to use Weights & Biases for experiment tracking.
+#@distill: Whether to use knowledge distillation.
+#@script_teacher: Name of the teacher experiment in the "experiments/" folder.
+#@config_teacher: Name of the teacher yaml file in the "experiments/<script_teacher>".
 def run_training(script_name, config_name, cudnn_benchmark=True, local_rank=-1, save_dir=None, base_seed=None,
                  use_lmdb=False, script_name_prv=None, config_name_prv=None, use_wandb=False,
                  distill=None, script_teacher=None, config_teacher=None):

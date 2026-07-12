@@ -9,7 +9,14 @@ from lib.utils.lmdb_utils import decode_img
 from pathlib import Path
 import numpy as np
 
-
+#@trackerlist is a decorator that generates a list of Tracker instances for the specified tracking method, parameter file, dataset, and run IDs.
+# It allows for easy creation of multiple Tracker instances with different configurations.
+#@Param: name: Name of tracking method.
+#@Param: parameter_name: Name of parameter file.
+#@Param: dataset_name: Name of dataset (otb, nfs, uav, tpl, vot, tn, gott, gotv, lasot).
+#@Param: run_ids: A single or list of run_ids.
+#@Param: display_name: Name to be displayed in the result plots.
+#@Param: result_only: If True, only the results directory will be used, ignoring the parameter name and run ID in the path.
 def trackerlist(name: str, parameter_name: str, dataset_name: str, run_ids = None, display_name: str = None,
                 result_only=False):
     """Generate list of trackers.
@@ -23,7 +30,11 @@ def trackerlist(name: str, parameter_name: str, dataset_name: str, run_ids = Non
         run_ids = [run_ids]
     return [Tracker(name, parameter_name, dataset_name, run_id, display_name, result_only) for run_id in run_ids]
 
-
+#@Tracker is a class that wraps the tracker for evaluation and running purposes.
+#@Param: name: Name of tracking method.
+#@Param: parameter_name: Name of parameter file.
+#@Param: run_id: The run id.
+#@Param: display_name: Name to be displayed in the result plots.
 class Tracker:
     """Wraps the tracker for evaluation and running purposes.
     args:
@@ -33,6 +44,13 @@ class Tracker:
         display_name: Name to be displayed in the result plots.
     """
 
+    #@__init__ is the constructor for the Tracker class.
+    #@Param: name: Name of tracking method.
+    #@Param: parameter_name: Name of parameter file.
+    #@Param: dataset_name: Name of dataset (otb, nfs, uav, tpl, vot, tn, gott, gotv, lasot).
+    #@Param: run_id: The run id.
+    #@Param: display_name: Name to be displayed in the result plots.
+    #@Param: result_only: If True, only the results directory will be used, ignoring the parameter name and run ID in the path.
     def __init__(self, name: str, parameter_name: str, dataset_name: str, run_id: int = None, display_name: str = None,
                  result_only=False):
         assert run_id is None or isinstance(run_id, int)
@@ -59,10 +77,17 @@ class Tracker:
         else:
             self.tracker_class = None
 
+    #@create_tracker creates an instance of the tracker class with the specified parameters and dataset name.
+    #@Param: params: Parameters for the tracker.
+    #@Return: An instance of the tracker class.
     def create_tracker(self, params):
         tracker = self.tracker_class(params, self.dataset_name)
         return tracker
 
+    #@run_sequence runs the tracker on a given sequence and returns the tracking output.
+    #@Param: seq: Sequence to run the tracker on.
+    #@Param: debug: Set visualization flag (None means default value specified in the parameters).
+    #@Return: Tracking output.
     def run_sequence(self, seq, debug=None):
         """Run tracker on sequence.
         args:
@@ -87,6 +112,11 @@ class Tracker:
         output = self._track_sequence(tracker, seq, init_info)
         return output
 
+    #@_track_sequence is a helper function that runs the tracker on a given sequence and returns the tracking output.
+    #@Param: tracker: Tracker instance to be used for tracking.
+    #@Param: seq: Sequence to run the tracker on.
+    #@Param: init_info: Initialization information for the tracker.
+    #@Return: Tracking output.
     def _track_sequence(self, tracker, seq, init_info):
         # Define outputs
         # Each field in output is a list containing tracker prediction for each frame.
@@ -151,6 +181,13 @@ class Tracker:
 
         return output
 
+    #@run_video runs the tracker on a given video file and displays the tracking results in real-time.
+    #@Param: videofilepath: Path to the video file.
+    #@Param: optional_box: Optional initial bounding box for the target object (format: [x, y, w, h]). If not provided, the user will be prompted to select the target ROI.
+    #@Param: debug: Debug level (None means default value specified in the parameters).
+    #@Param: visdom_info: Information for Visdom visualization (not used in this implementation).
+    #@Param: save_results: If True, the tracking results will be saved to the results directory.
+    #@Return: None
     def run_video(self, videofilepath, optional_box=None, debug=None, visdom_info=None, save_results=False):
         """Run the tracker with the vieofile.
         args:
@@ -272,12 +309,17 @@ class Tracker:
             np.savetxt(bbox_file, tracked_bb, delimiter='\t', fmt='%d')
 
 
+    #@get_parameters loads the parameters for the tracker from the specified parameter file.
+    #@Return: Parameters for the tracker.
     def get_parameters(self):
         """Get parameters."""
         param_module = importlib.import_module('lib.test.parameter.{}'.format(self.name))
         params = param_module.parameters(self.parameter_name)
         return params
 
+    #@_read_image reads an image from the specified file path or decodes an image from a list of bytes and shape.
+    #@Param: image_file: Path to the image file or a list containing the image bytes and shape.
+    #@Return: The read or decoded image in RGB format.
     def _read_image(self, image_file: str):
         if isinstance(image_file, str):
             im = cv.imread(image_file)

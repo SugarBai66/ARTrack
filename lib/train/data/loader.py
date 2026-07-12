@@ -2,13 +2,18 @@ import torch
 import torch.utils.data.dataloader
 import importlib
 import collections
-from torch._six import string_classes
+# 原第5行注释掉
+# from torch._six import string_classes
+# 改为：
+string_classes = (str, bytes)
 from lib.utils import TensorDict, TensorList
 
 if float(torch.__version__[:3]) >= 1.9 or len('.'.join((torch.__version__).split('.')[0:2])) > 3:
     int_classes = int
 else:
-    from torch._six import int_classes
+    # from torch._six import string_classes
+    # 改为：
+    string_classes = (str, bytes)
 import warnings
 warnings.filterwarnings("ignore")
 
