@@ -1,5 +1,4 @@
 /output
 pretrained_models/mae_pretrain_vit_base
-pretrained_models/*.pth
 !/output/test/tracking_results/artrack/artrack_256_got/got10k_submit.zip
 pretrained_models/*.pth
