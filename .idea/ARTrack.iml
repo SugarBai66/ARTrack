@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/output" />
+      <excludeFolder url="file://$MODULE_DIR$/pretrained_models" />
       <excludeFolder url="file://$MODULE_DIR$/pretrained_models/mae_pretrain_vit_base" />
     </content>
     <orderEntry type="jdk" jdkName="ostrack_fresh" jdkType="Python SDK" />

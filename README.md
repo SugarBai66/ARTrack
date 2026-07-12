@@ -1,5 +1,9 @@
 # ARTrack
 
+## 测试结果
+
+![image-20260712113725331](assets/test120result.png)
+
 ### ⚠️如果同名文件存在两个，file_origin是原始代码文件，file是可能修改文件
 
 
@@ -105,3 +109,6 @@ zip -r got10k_submit.zip got10k_submit/
 
 
 `mae_pretrain_vit_base.pth`文件放在`pretrained_models`目录下
+
+
+

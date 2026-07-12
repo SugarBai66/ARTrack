@@ -129,11 +129,8 @@ def extract_results(trackers, dataset, report_name, skip_missing_seq=False, plot
         target_visible = torch.tensor(seq.target_visible, dtype=torch.uint8) if seq.target_visible is not None else None
         for trk_id, trk in enumerate(trackers):
             # Load results
-            # 针对 got10k 数据集，结果存储在子目录 got10k/ 下
-            if seq.dataset == 'got10k':
-                results_path = '{}/got10k/{}.txt'.format(trk.results_dir, seq.name)
-            else:
-                results_path = '{}/{}.txt'.format(trk.results_dir, seq.name)
+            base_results_path = '{}/{}'.format(trk.results_dir, seq.name)
+            results_path = '{}.txt'.format(base_results_path)
 
             if os.path.isfile(results_path):
                 pred_bb = torch.tensor(load_text(str(results_path), delimiter=('\t', ','), dtype=np.float64))

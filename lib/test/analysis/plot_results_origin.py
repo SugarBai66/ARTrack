@@ -1,36 +1,6 @@
-# ---- 猴子补丁：为 matplotlib.backends.backend_pgf 补充 common_texification ----
-import matplotlib.backends.backend_pgf as pgf_backend
-if not hasattr(pgf_backend, 'common_texification'):
-    try:
-        from matplotlib._mathtext import _tex_escape as common_texification
-        pgf_backend.common_texification = common_texification
-    except ImportError:
-        def common_texification(s):
-            replacements = {'\\': r'\textbackslash{}', '{': r'\{', '}': r'\}', '$': r'\$',
-                            '%': r'\%', '&': r'\&', '#': r'\#', '_': r'\_', '~': r'\textasciitilde{}',
-                            '^': r'\textasciicircum{}'}
-            for k, v in replacements.items():
-                s = s.replace(k, v)
-            return s
-        pgf_backend.common_texification = common_texification
-
-# ---- webcolors 补丁 ----
-import webcolors
-from matplotlib.colors import CSS4_COLORS
-if not hasattr(webcolors, 'CSS3_HEX_TO_NAMES'):
-    webcolors.CSS3_HEX_TO_NAMES = {v: k for k, v in CSS4_COLORS.items()}
-# ---- 补丁结束 ----
-
-# ---- Legend._ncol 补丁 ----
-from matplotlib.legend import Legend
-if not hasattr(Legend, '_ncol'):
-    Legend._ncol = property(lambda self: self._ncols)
-
-# ---- 现在导入 tikzplotlib ----
 import tikzplotlib
 import matplotlib
 import matplotlib.pyplot as plt
-# ... 其余代码保持不变
 import os
 import torch
 import pickle
