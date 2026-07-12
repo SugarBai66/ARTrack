@@ -1,3 +1,6 @@
+.idea
+.gitignore
+.git-backup
 /output
 !/output/test/tracking_results/artrack/artrack_256_got/got10k_submit.zip
 /pretrained_models/mae_pretrain_vit_base/
