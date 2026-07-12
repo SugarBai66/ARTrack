@@ -101,3 +101,7 @@ zip -r got10k_submit.zip got10k_submit/
 执行后将快速返回（无输出），转换结果就在原目录下。
 
 如果你不清楚如何修改文件，告诉我，我可以指导你具体的修改细节。
+
+
+
+`mae_pretrain_vit_base.pth`文件放在`pretrained_models`目录下
