@@ -1,6 +1,8 @@
 # ARTrack
 
-## 测试结果
+## For dependency: packages.txt
+
+## 测试结果--->⚠️This result is error!
 
 ![image-20260712113725331](assets/test120result.png)
 
@@ -108,5 +110,11 @@ zip -r got10k_submit.zip got10k_submit/
 
 `mae_pretrain_vit_base.pth`文件放在`pretrained_models`目录下
 
+这个文件 `mae_pretrain_vit_base.pth` 的官方网站（即官方发布页）是 **Meta (Facebook) 在 GitHub 上的官方代码库**。
 
+- **官方GitHub仓库**: [`facebookresearch/mae`](https://github.com/facebookresearch/mae)
+  - 这个仓库包含了MAE (Masked Autoencoders) 的PyTorch官方实现，论文、代码、预训练模型权重和微调指南都在这里。
+  - 你提到的这个权重文件，就在该仓库的 `README.md` 文件中被官方直接引用，作为ViT-Base的预训练检查点。你之前使用的下载链接 `https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_base.pth` 也出自此处。
+
+此外，该模型在 **Hugging Face** 上也有官方页面，但模型卡片由 Hugging Face 团队撰写，并同样指向了上述 GitHub 仓库作为原始代码库。
 
